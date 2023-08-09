@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "HueYHN7AQ2rO0ZW55NdP2K7SxSXjgD2vMSEeIv3m7VNigqZZetLL7rz6WwgHn56wNFKVWgA4bVjzCHwiZ82YNQ==",
+  "dgSpecHash": "I+++hPzuRLsOAV2vDmUJ64eJO9XbSuJeYMoDykeOlWtZyKoVXqXCbe44awLUPBqXD2nAS5zUitl8hWPt0JRmlg==",
   "success": true,
   "projectFilePath": "C:\\Users\\Bishop\\Documents\\angular projects\\PokemonReviewApp\\PokemonReviewApp\\PokemonReviewApp.csproj",
   "expectedPackageFiles": [
@@ -24,6 +24,7 @@
     "C:\\Users\\Bishop\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",
     "C:\\Users\\Bishop\\.nuget\\packages\\mono.texttemplating\\2.2.1\\mono.texttemplating.2.2.1.nupkg.sha512",
     "C:\\Users\\Bishop\\.nuget\\packages\\npgsql\\7.0.4\\npgsql.7.0.4.nupkg.sha512",
+    "C:\\Users\\Bishop\\.nuget\\packages\\npgsql.entityframeworkcore.postgresql\\7.0.4\\npgsql.entityframeworkcore.postgresql.7.0.4.nupkg.sha512",
     "C:\\Users\\Bishop\\.nuget\\packages\\swashbuckle.aspnetcore\\6.2.3\\swashbuckle.aspnetcore.6.2.3.nupkg.sha512",
     "C:\\Users\\Bishop\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\6.2.3\\swashbuckle.aspnetcore.swagger.6.2.3.nupkg.sha512",
     "C:\\Users\\Bishop\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\6.2.3\\swashbuckle.aspnetcore.swaggergen.6.2.3.nupkg.sha512",
