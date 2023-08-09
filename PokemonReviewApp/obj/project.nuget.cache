@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "I+++hPzuRLsOAV2vDmUJ64eJO9XbSuJeYMoDykeOlWtZyKoVXqXCbe44awLUPBqXD2nAS5zUitl8hWPt0JRmlg==",
+  "dgSpecHash": "dR3hspZPCpM0Gbc1MMlpTECCKZ8PRQZdfRwPxMKWEwz3qxXwNU6tM7UEyFXlnDkGxFrhPsPgQVAiHrWs45iOVQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\Bishop\\Documents\\angular projects\\PokemonReviewApp\\PokemonReviewApp\\PokemonReviewApp.csproj",
   "expectedPackageFiles": [
@@ -10,6 +10,7 @@
     "C:\\Users\\Bishop\\.nuget\\packages\\microsoft.entityframeworkcore.analyzers\\7.0.10\\microsoft.entityframeworkcore.analyzers.7.0.10.nupkg.sha512",
     "C:\\Users\\Bishop\\.nuget\\packages\\microsoft.entityframeworkcore.design\\7.0.10\\microsoft.entityframeworkcore.design.7.0.10.nupkg.sha512",
     "C:\\Users\\Bishop\\.nuget\\packages\\microsoft.entityframeworkcore.relational\\7.0.10\\microsoft.entityframeworkcore.relational.7.0.10.nupkg.sha512",
+    "C:\\Users\\Bishop\\.nuget\\packages\\microsoft.entityframeworkcore.tools\\7.0.10\\microsoft.entityframeworkcore.tools.7.0.10.nupkg.sha512",
     "C:\\Users\\Bishop\\.nuget\\packages\\microsoft.extensions.apidescription.server\\3.0.0\\microsoft.extensions.apidescription.server.3.0.0.nupkg.sha512",
     "C:\\Users\\Bishop\\.nuget\\packages\\microsoft.extensions.caching.abstractions\\7.0.0\\microsoft.extensions.caching.abstractions.7.0.0.nupkg.sha512",
     "C:\\Users\\Bishop\\.nuget\\packages\\microsoft.extensions.caching.memory\\7.0.0\\microsoft.extensions.caching.memory.7.0.0.nupkg.sha512",
