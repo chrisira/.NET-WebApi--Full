@@ -41,6 +41,27 @@ namespace PokemonReviewApp.Controllers
             }
             return Ok(pokemon);
         }
+        // getting the pokemon rating using the pokeid
+        [HttpGet("{pokeId}/rating")]
+        [ProducesResponseType(200, Type = typeof(Pokemon))]
+        [ProducesResponseType(400)]
+
+        public IActionResult GetPokemonRating(int pokeId) {
+            if (!_pokemonrepository.PokemonExists(pokeId))
+            {
+                return NotFound();  
+            }
+       
+            var rating = _pokemonrepository.GetPokemonRating(pokeId);
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            return Ok(rating);
+
+        }
 
 
 
