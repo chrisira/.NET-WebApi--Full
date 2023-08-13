@@ -22,6 +22,10 @@ internal class Program
         {
             options.UseNpgsql(builder.Configuration.GetConnectionString("pokemon"));
         });
+        //builder.Services.AddDbContext<ApplicationDbContext>(options =>
+        //{
+        //    options.UseSqlServer(builder.Configuration.GetConnectionString("sql"));
+        //} );
 
         var app = builder.Build();
 
