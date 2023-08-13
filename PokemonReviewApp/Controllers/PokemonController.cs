@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Mvc;
+using PokemonReviewApp.Dtos;
 using PokemonReviewApp.Interfaces;
 using PokemonReviewApp.Models;
 using RouteAttribute = Microsoft.AspNetCore.Mvc.RouteAttribute;
@@ -10,17 +12,20 @@ namespace PokemonReviewApp.Controllers
     [ApiController]
     public class PokemonController:ControllerBase
     {
-        private readonly IpokemonRepository _pokemonrepository; 
-        public PokemonController(IpokemonRepository pokemonrepository)
+        private readonly IpokemonRepository _pokemonrepository;
+        private readonly IMapper _mapper;
+
+        public PokemonController(IpokemonRepository pokemonrepository,IMapper mapper)
         {
             _pokemonrepository = pokemonrepository;
-                
+            _mapper = mapper;
+
         }
         // returning all the pokemons in the context
         [HttpGet]
         [ProducesResponseType(200,Type= typeof(IEnumerable<Pokemon>))]   
         public IActionResult GetPokemons() {
-            var pokemons = _pokemonrepository.GetPokemons();    
+            var pokemons = _mapper.Map<List<PokemonDto>>(_pokemonrepository.GetPokemons());    
             if(!ModelState.IsValid) { 
             return BadRequest(ModelState);  
             }
@@ -35,7 +40,7 @@ namespace PokemonReviewApp.Controllers
             if(!_pokemonrepository.PokemonExists(pokeId)) {
                 return NotFound();
             }
-            var pokemon = _pokemonrepository.GetPokemon(pokeId);
+            var pokemon = _mapper.Map<PokemonDto>(_pokemonrepository.GetPokemon(pokeId));
             if(!ModelState.IsValid) { 
                 return BadRequest(ModelState);  
             }
