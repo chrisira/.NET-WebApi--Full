@@ -16,6 +16,7 @@ namespace PokemonReviewApp.Controllers
             _pokemonrepository = pokemonrepository;
                 
         }
+        // returning all the pokemons in the context
         [HttpGet]
         [ProducesResponseType(200,Type= typeof(IEnumerable<Pokemon>))]   
         public IActionResult GetPokemons() {
@@ -25,5 +26,23 @@ namespace PokemonReviewApp.Controllers
             }
             return Ok(pokemons);
         }
+        // returning one pokemon using pokeid
+        [HttpGet("{pokeId}")]
+        [ProducesResponseType(200, Type = typeof(Pokemon))]
+        [ProducesResponseType(400)]
+        public IActionResult GetPokemon(int pokeId)
+        {
+            if(!_pokemonrepository.PokemonExists(pokeId)) {
+                return NotFound();
+            }
+            var pokemon = _pokemonrepository.GetPokemon(pokeId);
+            if(!ModelState.IsValid) { 
+                return BadRequest(ModelState);  
+            }
+            return Ok(pokemon);
+        }
+
+
+
     }
 }
