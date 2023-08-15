@@ -1,33 +1,42 @@
-﻿using PokemonReviewApp.Interfaces;
+﻿using Microsoft.IdentityModel.Tokens;
+using PokemonReviewApp.Data;
+using PokemonReviewApp.Interfaces;
 using PokemonReviewApp.Models;
 
 namespace PokemonReviewApp.Repository
 {
     public class OwnerRepository : IOwnerRepository
     {
+        private readonly ApplicationDbContext _context;
+
+        public OwnerRepository(ApplicationDbContext context)
+        {
+            _context = context;
+            
+        }
         public Owner GetOwner(int ownerId)
         {
-            throw new NotImplementedException();
+            return _context.Owners.Where(o => o.Id == ownerId).FirstOrDefault();
         }
 
         public ICollection<Owner> GetOwnerOfAPokemon(int pokeid)
         {
-            throw new NotImplementedException();
+            return _context.PokemonOwners.Where(p => p.Pokemon.Id == pokeid).Select(o => o.Owner).ToList();
         }
 
         public ICollection<Owner> GetOwners()
         {
-            throw new NotImplementedException();
+            return _context.Owners.ToList();
         }
 
         public ICollection<Pokemon> GetPokemonByOwner(int ownerId)
         {
-            throw new NotImplementedException();
+            return _context.PokemonOwners.Where(p => p.Owner.Id == ownerId).Select(p => p.Pokemon).ToList();    
         }
 
         public bool OwnerExists(int ownerId)
         {
-            throw new NotImplementedException();
+            return _context.Owners.Any(o => o.Id == ownerId);   
         }
     }
 }
