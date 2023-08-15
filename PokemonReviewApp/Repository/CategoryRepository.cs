@@ -31,7 +31,7 @@ namespace PokemonReviewApp.Repository
         public ICollection<Pokemon> GetPokemonByCategory(int categoryId)
         {
             return _context.PokemonCategories.
-                Where(e=> e.PokemonId == categoryId).Select(c=> c.Pokemon).ToList();  
+                Where(e => e.CategoryId == categoryId).Select(c => c.Pokemon).ToList();  
         }
     }
 }
