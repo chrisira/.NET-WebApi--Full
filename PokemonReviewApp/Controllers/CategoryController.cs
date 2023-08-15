@@ -13,8 +13,8 @@ namespace PokemonReviewApp.Controllers
     public class CategoryController:ControllerBase
 
     {
-        private IcategoryRepository _categoryRepository;
-        private IMapper _mapper;
+        private readonly IcategoryRepository _categoryRepository;
+        private readonly IMapper _mapper;
 
         public CategoryController(IcategoryRepository categoryRepository,IMapper mapper) { 
         

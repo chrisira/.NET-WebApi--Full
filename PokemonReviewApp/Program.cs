@@ -16,6 +16,7 @@ internal class Program
         builder.Services.AddTransient<Seed>();
         builder.Services.AddScoped<IpokemonRepository, PokemonRepository>();
         builder.Services.AddScoped<IcategoryRepository, CategoryRepository>();
+        builder.Services.AddScoped<ICountryRepository, CountryRepository>();
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();

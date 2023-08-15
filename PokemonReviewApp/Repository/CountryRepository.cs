@@ -17,7 +17,7 @@ namespace PokemonReviewApp.Repository
             return _context.Countries.Any(c => c.Id == id);
         }
 
-        public ICollection<Country> Getcountries()
+        public ICollection<Country> GetCountries()
         {
             return _context.Countries.ToList();
         }

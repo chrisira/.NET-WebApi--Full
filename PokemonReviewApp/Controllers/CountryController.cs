@@ -1,33 +1,70 @@
-﻿using PokemonReviewApp.Interfaces;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
+using PokemonReviewApp.Dtos;
+using PokemonReviewApp.Interfaces;
 using PokemonReviewApp.Models;
+using PokemonReviewApp.Repository;
 
 namespace PokemonReviewApp.Controllers
 {
-    public class CountryController : ICountryRepository
+    [Route("api/[controller]")]
+    [ApiController]
+    public class CountryController:ControllerBase
     {
-        public bool countryExists(int id)
-        {
-            throw new NotImplementedException();
+        private readonly ICountryRepository _countryRepository;
+        private readonly IMapper _mapper;
+
+        public CountryController(ICountryRepository countryRepository,IMapper mapper) {
+            _countryRepository = countryRepository;
+            _mapper = mapper;
+        
         }
 
-        public ICollection<Country> Getcountries()
+        [HttpGet]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<Country>))]
+        public IActionResult GetCountries()
         {
-            throw new NotImplementedException();
+            var countries = _mapper.Map<List<CountryDto>>(_countryRepository.GetCountries());
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            return Ok(countries);
+        }
+        [HttpGet("{countryId}")]
+        [ProducesResponseType(200, Type = typeof(Country))]
+        [ProducesResponseType(400)]
+        public IActionResult GetCountry(int countryId)
+        {
+            if (!_countryRepository.countryExists(countryId))
+            {
+                return NotFound();
+            }
+            
+            var country = _mapper.Map<CountryDto>(_countryRepository.GetCountry(countryId));
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            return Ok(country);
+
+        }
+        [HttpGet("owners/{ownerId}")]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<Country>))]
+        [ProducesResponseType(400)]
+
+
+        public IActionResult GetCountryOfAnOwner(int ownerId)
+        {
+            var country = _mapper.Map<CountryDto>(_countryRepository.GetCountryByOwner(ownerId));
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            return Ok(country);
+
         }
 
-        public Country GetCountry(int id)
-        {
-            throw new NotImplementedException();
-        }
 
-        public Country GetCountryByOwner(int ownerId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public ICollection<Owner> GetOwnersFromCountry(int ownerId)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
