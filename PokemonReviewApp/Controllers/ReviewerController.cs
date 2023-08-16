@@ -37,16 +37,30 @@ namespace PokemonReviewApp.Controllers
         [ProducesResponseType(400)]
         public IActionResult GetReviewer(int reviewerId)
         {
-            if (!_reviewerRepository.ReviewExists(reviewerId))
+            if (!_reviewerRepository.ReviewerExists(reviewerId))
             {
                 return NotFound();
             }
-            var reviewer = _mapper.Map<ReviewDto>(_reviewerRepository.GetReviewer(reviewerId));
+            var reviewer = _mapper.Map<ReviewerDto>(_reviewerRepository.GetReviewer(reviewerId));
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
             return Ok(reviewer);
+        }
+        [HttpGet("{reviewerId}/reviews")]
+        public IActionResult GetReviewsByAReviewer(int reviewerId)
+        {
+            if (!_reviewerRepository.ReviewerExists(reviewerId))
+                return NotFound();
+
+            var reviews = _mapper.Map<List<ReviewDto>>(
+                _reviewerRepository.GetReviewsByReviewer(reviewerId));
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            return Ok(reviews);
         }
 
 
