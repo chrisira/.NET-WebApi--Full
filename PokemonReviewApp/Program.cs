@@ -18,6 +18,7 @@ internal class Program
         builder.Services.AddScoped<IcategoryRepository, CategoryRepository>();
         builder.Services.AddScoped<ICountryRepository, CountryRepository>();
         builder.Services.AddScoped<IOwnerRepository, OwnerRepository>();
+        builder.Services.AddScoped<IReviewRepository, ReviewRepository>();
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();

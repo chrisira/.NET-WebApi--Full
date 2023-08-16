@@ -17,7 +17,7 @@ namespace PokemonReviewApp.Repository
         public ICollection<Review> GetReviews()
         {
             return _context.Reviews.ToList();
-        };
+        }
 
         public Review GetReview(int reviewId)
         {
