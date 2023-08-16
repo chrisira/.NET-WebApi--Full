@@ -1,28 +1,38 @@
-﻿using PokemonReviewApp.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
+using PokemonReviewApp.Data;
+using PokemonReviewApp.Interfaces;
 using PokemonReviewApp.Models;
 
 namespace PokemonReviewApp.Repository
 {
+   
     public class ReviewerRepository : IreviewerRepository
     {
+        private readonly ApplicationDbContext _context;
+
+        public ReviewerRepository(ApplicationDbContext context)
+        {
+            _context = context;
+                
+        }
         public Reviewer GetReviewer(int reviewerId)
         {
-            throw new NotImplementedException();
+            return _context.Reviewers.Where(r => r.Id == reviewerId).Include(e => e.Reviews).FirstOrDefault();
         }
 
         public ICollection<Reviewer> GetReviewers()
         {
-            throw new NotImplementedException();
+            return _context.Reviewers.ToList();
         }
 
-        public ICollection<Reviewer> GetReviewsByReviewer(int reviewerId)
+        public ICollection<Review> GetReviewsByReviewer(int reviewerId)
         {
-            throw new NotImplementedException();
+           return _context.Reviews.Where(r => r.Reviewer.Id == reviewerId).ToList();    
         }
 
-        public bool ReviewExists(int reviewerId)
+        public bool ReviewerExists(int reviewerId)
         {
-            throw new NotImplementedException();
+            return _context.Reviewers.Any(r => r.Id == reviewerId);
         }
     }
 }
