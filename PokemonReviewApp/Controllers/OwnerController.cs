@@ -13,11 +13,13 @@ namespace PokemonReviewApp.Controllers
     {
         private readonly IOwnerRepository _ownerRepository;
         private readonly IMapper _mapper;
+        private readonly ICountryRepository _countrRepository;
 
-        public OwnerController(IOwnerRepository ownerRepository,IMapper mapper)
+        public OwnerController(IOwnerRepository ownerRepository,ICountryRepository countryRepository, IMapper mapper)
         {
             _ownerRepository = ownerRepository;
             _mapper = mapper;
+            _countrRepository = countryRepository;
             
         }
         [HttpGet]
@@ -65,6 +67,47 @@ namespace PokemonReviewApp.Controllers
             }
 
             return Ok(pokemons);
+        }
+
+        [HttpPost]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        public IActionResult CreateOwner([FromQuery] int countryId, [FromBody] OwnerDto ownerCreate)
+        {
+            //checking if the Owner is null
+            if (ownerCreate == null)
+            {
+                return BadRequest(ModelState);
+            }
+
+            // cheking if the owner name exists
+            var owner = _ownerRepository.GetOwners()
+                .Where(c => c.LastName.Trim().ToUpper() == ownerCreate.LastName.TrimEnd().ToUpper()).FirstOrDefault();
+
+            if (owner != null)
+            {
+                ModelState.AddModelError("", "Owner already exists");
+                return StatusCode(422, ModelState);
+            }
+
+            // checking if data is valid
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var ownerMap = _mapper.Map<Owner>(ownerCreate);
+
+            ownerMap.Country = _countrRepository.GetCountry(countryId); 
+
+            if (!_ownerRepository.CreateOwner(ownerMap))
+            {
+                ModelState.AddModelError("", "Something went wrong while trying to save Owner");
+                return StatusCode(500, ModelState);
+            }
+
+            return Ok("Owner saved successfully");
+
         }
     }
 
