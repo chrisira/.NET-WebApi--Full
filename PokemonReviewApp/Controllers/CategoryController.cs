@@ -10,17 +10,17 @@ namespace PokemonReviewApp.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CategoryController:ControllerBase
+    public class CategoryController : ControllerBase
 
     {
         private readonly IcategoryRepository _categoryRepository;
         private readonly IMapper _mapper;
 
-        public CategoryController(IcategoryRepository categoryRepository,IMapper mapper) { 
-        
-        _categoryRepository = categoryRepository;
-        _mapper = mapper;
-        
+        public CategoryController(IcategoryRepository categoryRepository, IMapper mapper) {
+
+            _categoryRepository = categoryRepository;
+            _mapper = mapper;
+
         }
         // returning all the pokemons in the context
         [HttpGet]
@@ -78,14 +78,14 @@ namespace PokemonReviewApp.Controllers
         public IActionResult CreateCategory([FromBody] CategoryDto categoryCreate)
         {
             //checking if the categoryCreate is null
-           if(categoryCreate == null)
+            if (categoryCreate == null)
             {
                 return BadRequest(ModelState);
             }
 
             // cheking if the category name exists
             var category = _categoryRepository.GetCategories()
-                .Where(c => c.Name.Trim().ToUpper() == categoryCreate.Name.TrimEnd().ToUpper()).FirstOrDefault();   
+                .Where(c => c.Name.Trim().ToUpper() == categoryCreate.Name.TrimEnd().ToUpper()).FirstOrDefault();
 
             if (category != null)
             {
@@ -95,9 +95,9 @@ namespace PokemonReviewApp.Controllers
 
             // checking if data is valid
 
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                            return BadRequest(ModelState);  
+                return BadRequest(ModelState);
             }
             var categoryMap = _mapper.Map<Category>(categoryCreate);
 
@@ -108,6 +108,47 @@ namespace PokemonReviewApp.Controllers
             }
 
             return Ok("category save successfull");
+
+        }
+        [HttpPut("{categoryId}")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(500)]
+
+        public IActionResult UpdateCategory(int categoryId, [FromBody]CategoryDto updateCategory)
+        {
+
+            //checking if the updateCategory is null
+            if (updateCategory == null)
+            {
+                return BadRequest(ModelState);
+            }
+            if(categoryId != updateCategory.Id)
+            {
+                return BadRequest(ModelState);
+
+            }
+
+            if (!_categoryRepository.CategoriesExists(categoryId))
+            {
+                return NotFound();
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var categoryMap = _mapper.Map<Category>(updateCategory);
+
+            if (!_categoryRepository.UpdateCategory(categoryMap))
+            {
+                ModelState.AddModelError("", "Something went wrong while trying to Update category");
+                return StatusCode(500, ModelState);
+            }
+            return NoContent();
+
+
 
         }
 
