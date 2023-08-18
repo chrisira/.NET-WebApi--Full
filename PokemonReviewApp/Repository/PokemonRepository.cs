@@ -1,4 +1,5 @@
-﻿using PokemonReviewApp.Data;
+﻿using Microsoft.EntityFrameworkCore.Diagnostics;
+using PokemonReviewApp.Data;
 using PokemonReviewApp.Interfaces;
 using PokemonReviewApp.Models;
 
@@ -42,6 +43,38 @@ namespace PokemonReviewApp.Repository
         {
             return _context.Pokemon.Any(p=> p.Id == pokeid);
 
+        }
+
+        bool CreatePokemon(int ownerId, int categoryId, Pokemon pokemon)
+        {
+            var pokemonOwnerEntity = _context.Owners.Where(a => a.Id == ownerId).FirstOrDefault(); 
+            var category = _context.Categories.Where(c => c.Id == categoryId).FirstOrDefault();
+
+            var PokemonOwner = new PokemonOwner()
+            {
+                Owner = pokemonOwnerEntity,
+                Pokemon = pokemon,
+            };
+
+            _context.Add(PokemonOwner);
+
+            var PokemonCategory = new PokemonCategory()
+            {
+                Category = category,
+                Pokemon = pokemon,
+            };
+            _context.Add(PokemonCategory);
+
+            _context.Add(pokemon);
+
+            return Save();
+
+        }
+
+        bool Save()
+        {
+            var saved = _context.SaveChanges();
+            return saved > 0 ? true : false;
         }
     }
 }
