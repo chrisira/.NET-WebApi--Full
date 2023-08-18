@@ -13,11 +13,18 @@ namespace PokemonReviewApp.Controllers
     {
         private readonly IReviewRepository _reviewRepository;
         private readonly IMapper _mapper;
+        private readonly IpokemonRepository _pokemonRepository;
+        private readonly IreviewerRepository _reviewerRepository;
 
-        public ReviewController(IReviewRepository reviewRepository,IMapper mapper)
+        public ReviewController(IReviewRepository reviewRepository,
+            IpokemonRepository pokemonRepository,
+            IreviewerRepository reviewerRepository,
+            IMapper mapper)
         {
             _reviewRepository = reviewRepository;
             _mapper = mapper;
+            _pokemonRepository = pokemonRepository;
+            _reviewerRepository = reviewerRepository;
                 
         }
 
@@ -66,7 +73,7 @@ namespace PokemonReviewApp.Controllers
         [HttpPost]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
-        public IActionResult CreateReview([FromBody] ReviewDto reviewCreate)
+        public IActionResult CreateReview([FromQuery] int reviewerId,[FromQuery] int pokeId,[FromBody] ReviewDto reviewCreate)
         {
             //checking if the reviewCreate is null
             if (reviewCreate == null)
@@ -75,10 +82,10 @@ namespace PokemonReviewApp.Controllers
             }
 
             // cheking if the Review name exists
-            var review = _reviewRepository.GetReviews()
+            var reviews = _reviewRepository.GetReviews()
                 .Where(c => c.Title.Trim().ToUpper() == reviewCreate.Title.TrimEnd().ToUpper()).FirstOrDefault();
 
-            if (review != null)
+            if (reviews != null)
             {
                 ModelState.AddModelError("", "review already exists");
                 return StatusCode(422, ModelState);
@@ -91,6 +98,8 @@ namespace PokemonReviewApp.Controllers
                 return BadRequest(ModelState);
             }
             var reviewMap = _mapper.Map<Review>(reviewCreate);
+            reviewMap.Pokemon = _pokemonRepository.GetPokemon(pokeId);
+            reviewMap.Reviewer = _reviewerRepository.GetReviewer(reviewerId);   
 
             if (!_reviewRepository.CreateReview(reviewMap))
             {
