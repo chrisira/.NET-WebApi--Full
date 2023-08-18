@@ -144,6 +144,32 @@ namespace PokemonReviewApp.Controllers
 
 
         }
+        [HttpDelete("{countryId}")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(500)]
+
+        public IActionResult DeleteCountry(int countryId)
+        {
+            if (!_countryRepository.countryExists(countryId))
+            {
+                return NotFound();
+            }
+            var countryToDelete = _countryRepository.GetCountry(countryId);
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            if (!_countryRepository.DeleteCountry(countryToDelete))
+            {
+                ModelState.AddModelError("", "Something went wrong while trying to delete country");
+                return StatusCode(500, ModelState);
+            }
+            return NoContent();
+        }
 
 
     }
