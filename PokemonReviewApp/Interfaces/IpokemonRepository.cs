@@ -13,7 +13,9 @@ namespace PokemonReviewApp.Interfaces
         // gettting the pokemon rating
         decimal GetPokemonRating(int pokeid);
         // checking whether the pokemon exists
-        bool PokemonExists(int pokeid); 
+        bool PokemonExists(int pokeid);
+        bool CreatePokemon(int ownerId, int categoryId,Pokemon pokemon);
+        bool save();
              
        
     }
